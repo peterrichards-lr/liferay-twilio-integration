@@ -4,6 +4,7 @@ import com.liferay.portal.kernel.model.Phone;
 import com.liferay.twilio.whatsapp.api.TwilioException;
 import com.liferay.twilio.whatsapp.api.WhatsAppNotificationService;
 import com.liferay.twilio.whatsapp.configuration.WhatsAppNotificationServiceConfigurationWrapper;
+import com.liferay.twilio.whatsapp.constants.TwilioWhatsAppConstants;
 import com.liferay.twilio.whatsapp.model.Notification;
 import com.liferay.twilio.whatsapp.model.NotificationCreator;
 import com.twilio.Twilio;
@@ -59,8 +60,8 @@ public class WhatsAppNotificationServiceImpl implements WhatsAppNotificationServ
 			}
 			mutex.release();
 
-			final PhoneNumber sender = new PhoneNumber(notification.getSender());
-			final PhoneNumber recipient = new PhoneNumber(notification.getRecipient());
+			final PhoneNumber sender = buildPhoneNumber(notification.getSender());
+			final PhoneNumber recipient = buildPhoneNumber(notification.getRecipient());
 
 			final Message message = Message.creator(recipient, sender, notification.getMessage()).create();
 
@@ -68,6 +69,10 @@ public class WhatsAppNotificationServiceImpl implements WhatsAppNotificationServ
 		} catch (InterruptedException ie) {
 			throw new TwilioException("Interrupted while sending message", ie);
 		}
+	}
+
+	private PhoneNumber buildPhoneNumber(String number) {
+		return new PhoneNumber(String.format("%s%s", TwilioWhatsAppConstants.WHATSAPP_NUMBER_PREFIX, number));
 	}
 
 	private Notification updateNotification(final Notification notification, final Message message) {
