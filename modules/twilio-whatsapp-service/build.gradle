@@ -1,0 +1,9 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+	compileOnly group: "org.slf4j", name: "slf4j-api"
+	compileOnly project(":modules:twilio-whatsapp-api")
+	compileInclude group: "com.twilio.sdk", name: "twilio", version: "8.0.0", transitive: false
+	compileInclude group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1', transitive: true
+	compileInclude group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.12' , transitive: true
+	compileInclude group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.60'
+}
