@@ -2,7 +2,7 @@ package com.liferay.twilio.whatsapp.model;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Phone;
-import org.jsoup.internal.StringUtil;
+import com.liferay.twilio.whatsapp.util.StringUtil;
 
 import static com.liferay.twilio.whatsapp.constants.TwilioWhatsAppConstants.PHONE_NUMBER_REGEX_PATTERN;
 import static com.liferay.twilio.whatsapp.constants.TwilioWhatsAppConstants.ZERO;

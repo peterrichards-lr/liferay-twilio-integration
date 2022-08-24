@@ -7,10 +7,10 @@ import com.liferay.twilio.whatsapp.configuration.WhatsAppNotificationServiceConf
 import com.liferay.twilio.whatsapp.constants.TwilioWhatsAppConstants;
 import com.liferay.twilio.whatsapp.model.Notification;
 import com.liferay.twilio.whatsapp.model.NotificationCreator;
+import com.liferay.twilio.whatsapp.util.StringUtil;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
-import org.jsoup.internal.StringUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
