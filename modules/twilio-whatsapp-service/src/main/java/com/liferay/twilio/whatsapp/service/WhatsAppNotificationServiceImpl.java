@@ -58,17 +58,19 @@ public class WhatsAppNotificationServiceImpl implements WhatsAppNotificationServ
 			if (!initialised) {
 				throw new IllegalStateException("The init method must be before a notification can be sent");
 			}
-			mutex.release();
-
-			final PhoneNumber sender = buildPhoneNumber(notification.getSender());
-			final PhoneNumber recipient = buildPhoneNumber(notification.getRecipient());
-
-			final Message message = Message.creator(recipient, sender, notification.getMessage()).create();
-
-			return updateNotification(notification, message);
 		} catch (InterruptedException ie) {
 			throw new TwilioException("Interrupted while sending message", ie);
 		}
+		finally {
+			mutex.release();
+		}
+
+		final PhoneNumber sender = buildPhoneNumber(notification.getSender());
+		final PhoneNumber recipient = buildPhoneNumber(notification.getRecipient());
+
+		final Message message = Message.creator(recipient, sender, notification.getMessage()).create();
+
+		return updateNotification(notification, message);
 	}
 
 	private PhoneNumber buildPhoneNumber(String number) {
@@ -112,9 +114,10 @@ public class WhatsAppNotificationServiceImpl implements WhatsAppNotificationServ
 			}
 			Twilio.init(accountSid, authToken);
 			initialised = true;
-			mutex.release();
 		} catch (InterruptedException ie) {
 			throw new TwilioException("Interrupted while initialising Twilio", ie);
+		} finally {
+			mutex.release();
 		}
 	}
 
